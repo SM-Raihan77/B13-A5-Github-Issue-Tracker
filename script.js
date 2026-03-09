@@ -17,28 +17,28 @@ function hideLoader() {
 
 // Step-1: Load Issues
 async function loadIssues() {
-    
+
     showLoader();
 
 
-        const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues");
-        const data = await res.json();
+    const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues");
+    const data = await res.json();
 
-        
-        allIssues = data.data;
 
-        // console.log("Data received:", allIssues);
+    allIssues = data.data;
 
-        displayIssues(allIssues);
-    
-        hideLoader();
-        // console.log("Issues loaded successfully");
+    // console.log("Data received:", allIssues);
+
+    displayIssues(allIssues);
+
+    hideLoader();
+    // console.log("Issues loaded successfully");
 
 }
 
 // Step-2: Display Issues 
 function displayIssues(issues) {
-    
+
     container.innerHTML = "";
     issueCount.innerText = issues.length;
 
@@ -51,10 +51,10 @@ function displayIssues(issues) {
             ? "border-t-green-500 text-green-500"
             : "border-t-purple-400 text-purple-500";
 
-    
 
-    // base card styles
-        card.className = `bg-white border-t-4 ${statusColor} rounded-2xl p-6 flex flex-col justify-between shadow-sm mx-auto mb-6 w-full max-w-md`; 
+
+        // base card styles
+        card.className = `bg-white border-t-4 ${statusColor} rounded-2xl p-6 flex flex-col justify-between shadow-sm mx-auto mb-6 w-full max-w-md`;
 
         // priority styles
         const priority = issue.priority?.toLowerCase() || "low";
@@ -65,20 +65,20 @@ function displayIssues(issues) {
         };
         const priorityStyle = priorityStyles[priority] || priorityStyles.low;
 
-        
+
 
         // adding content to card
-        const issueId = issue.id ;
-        const authorName = issue.author ;
+        const issueId = issue.id;
+        const authorName = issue.author;
         const date = issue.createdAt ? new Date(issue.createdAt).toLocaleDateString() : "No Date";
         const isBug = issue.labels && issue.labels.includes("bug");
         const isDocumentation = issue.labels && issue.labels.includes("documentation");
-// icon color based on status
-const statusIcon = issue.status === "open" 
-    ? "fa-circle-dot te-500"  
-    : "fa-circle-check text-purple-500"; 
+        // icon color based on status
+        const statusIcon = issue.status === "open"
+            ? "fa-circle-dot te-500"
+            : "fa-circle-check text-purple-500";
 
-// card content
+        // card content
 
         card.innerHTML = `
             <div>
@@ -99,12 +99,12 @@ const statusIcon = issue.status === "open"
                 </div>
 
         <p class="text-xs font-medium p-2 rounded mb-4 text-center 
-    ${isBug 
-        ? 'text-red-600 bg-red-50' 
-        : isDocumentation 
-            ? 'text-yellow-600 bg-yellow-50' 
-            : 'text-green-600 bg-green-50'
-    }">
+    ${isBug
+                ? 'text-red-600 bg-red-50'
+                : isDocumentation
+                    ? 'text-yellow-600 bg-yellow-50'
+                    : 'text-green-600 bg-green-50'
+            }">
     ${issue.labels}
 </p>
             <div class="text-xs text-gray-400 border-t pt-3 text-center">
