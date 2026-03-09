@@ -28,13 +28,13 @@
         <fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-xs border p-6 shadow-sm">
             <legend class="fieldset-legend font-semibold text-center mx-auto">Sign In</legend>
 
-            <label class="label">Username</label>
-            <input type="text" class="input input-bordered w-full" placeholder="Username" />
+            <label  class="label">Username</label>
+            <input id="username-field" type="text" class="input input-bordered w-full" placeholder="Username" />
 
             <label class="label mt-2">Password</label>
-            <input type="password" class="input input-bordered w-full" placeholder="Password" />
+            <input id="password-field"  type="password" class="input input-bordered w-full" placeholder="Password" />
 
-            <button class="btn btn-primary mt-6 w-full text-white">Sign In</button>
+            <button  id="sign-in-btn"   class="btn btn-primary mt-6 w-full text-white">Sign In</button>
 
 
             <!-- Demo Credentials Box -->
@@ -49,6 +49,24 @@
 
     </div>
 </body>
+
+<script>
+    document.getElementById('sign-in-btn').addEventListener('click', function (event) {
+        event.preventDefault(); // পেজ রিফ্রেশ হওয়া আটকাবে
+
+        // ইনপুট ভ্যালুগুলো নেওয়া
+        const username = document.getElementById('username-field').value;
+        const password = document.getElementById('password-field').value;
+
+        // ভ্যালিডেশন চেক (আপনার ডেমো ক্রেডেনশিয়াল অনুযায়ী)
+        if (username === 'admin' && password === 'admin123') {
+            // সফল হলে হোম পেজে নিয়ে যাবে
+            window.location.href = 'home.html';
+        } else {
+            alert('ভুল ইউজারনেম বা পাসওয়ার্ড! আবার চেষ্টা করুন।');
+        }
+    });
+</script>
 
 
 </html>

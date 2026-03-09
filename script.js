@@ -5,6 +5,10 @@ let allIssues = [];
 const loader = document.getElementById("loading");
 const container = document.getElementById("issueContainer");
 const issueCount = document.getElementById("issueCount");
+const modal = document.getElementById("issue_modal");
+const modalContent = document.getElementById("modal-content");
+
+
 
 // Loader Functions
 function showLoader() {
@@ -45,6 +49,8 @@ function displayIssues(issues) {
     issues.forEach(issue => {
         // create card element
         const card = document.createElement("div");
+
+
 
         // border color based on status
         const statusColor = issue.status === "open"
@@ -115,8 +121,66 @@ function displayIssues(issues) {
 
 
         container.appendChild(card);
+
+        // add event listener to open modal on click
+        card.addEventListener("click", () => {
+            openModal(issue);
+        });
+
     });
 }
+
+function openModal(issue) {
+
+    const date = issue.createdAt
+        ? new Date(issue.createdAt).toLocaleDateString()
+        : "No Date";
+
+    const statusColor =
+        issue.status === "open"
+            ? "bg-green-100 text-green-600"
+            : "bg-purple-100 text-purple-600";
+
+    modalContent.innerHTML = `
+        <h2 class="text-xl font-bold text-gray-800 mb-3">${issue.title}</h2>
+
+        <div class="flex items-center gap-3 mb-4">
+            <span class="px-3 py-1 text-xs rounded-full ${statusColor}">
+                ${issue.status}
+            </span>
+            <span class="text-sm text-gray-400">
+                Opened by ${issue.author} • ${date}
+            </span>
+        </div>
+
+        <p class="text-gray-500 mb-6">
+            ${issue.description}
+        </p>
+
+        <div class="flex gap-3 mb-6">
+            <span class="px-3 py-1 text-xs bg-red-100 text-red-500 rounded">
+                ${issue.labels}
+            </span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 bg-gray-50 p-4 rounded-lg">
+            <div>
+                <p class="text-xs text-gray-400">Assignee</p>
+                <p class="font-semibold text-gray-700">${issue.author}</p>
+            </div>
+
+            <div>
+                <p class="text-xs text-gray-400">Priority</p>
+                <p class="font-semibold text-red-500 uppercase">${issue.priority}</p>
+            </div>
+        </div>
+    `;
+
+    modal.showModal();
+}
+
+
+
 
 // Filter Issues
 function filterIssues(status, btn) {
@@ -152,3 +216,6 @@ function handleSearch(query) {
 
 
 loadIssues();
+
+
+
